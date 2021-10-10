@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'index/icon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'index/icon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'index/icon/favicon-16x16.png' %}">
+    <link rel="icon" href="{% static 'index/icon/favicon.ico' %}">
+    <link rel="shortcut icon" href="{% static 'index/icon/favicon.ico' %}">
+    <link rel="manifest" href="{% static 'index/icon/site.webmanifest' %}">
+    <link rel="mask-icon" href="{% static 'index/icon/safari-pinned-tab.svg' %}" color="#5bbad5">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap">
+    <link rel="stylesheet" href="{% static 'index/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'index/css/style.css' %}">
+
+    <script src="{% static 'index/js/bootstrap.min.js' %}"></script>
+
+    <title>기능훈련관리시스템</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'index/img/logo.png' %}" alt="logo" width="30" height="24"
+                 class="d-inline-block align-text-top">
+            기능훈련관리시스템
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="#">공지사항</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="#">게시판</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="#">강의실</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="#">자료실</a>
+                </li>
+            </ul>
+            <a href="{% url 'signin' %}" class="btn btn-outline-primary">로그인</a>
+        </div>
+    </div>
+</nav>
+<main role="main" class="container mt-2">
+    {% block contents %}
+    {% endblock %}
+</main>
+</body>
+</html>

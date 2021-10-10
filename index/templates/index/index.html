@@ -1,0 +1,11 @@
+{% extends 'index/base.html' %}
+{% block contents %}
+    <h1 class="text-center">기능훈련관리시스템</h1>
+    {% if request.user.is_authenticated %}
+        로그인 됨
+    {% else %}
+        <div class="alert alert-danger mt-4" role="alert">
+            로그인이 필요합니다. <a href="{% url 'signin' %}" class="alert-link">로그인하기</a>
+        </div>
+    {% endif %}
+{% endblock %}
