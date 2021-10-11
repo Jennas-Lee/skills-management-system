@@ -1,0 +1,50 @@
+{% extends 'index/base.html' %}
+{% block contents %}
+    {% if request.user.is_authenticated %}
+        <h1 class="text-center">공지사항</h1>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">제목</th>
+                <th scope="col">글쓴이</th>
+                <th scope="col">날짜</th>
+                <th scope="col">댓글</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for notice in page_obj %}
+            <tr>
+                <th scope="row">1</th>
+                <td>{{ notice.title }}</td>
+                <td>{{ notice.user }}</td>
+                <td>{{ notice.created_at }}</td>
+                <td>@mdo</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'create_notice' %}" class="btn btn-primary">글쓰기</a>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    {% else %}
+        <div class="alert alert-danger mt-4" role="alert">
+            로그인이 필요합니다. <a href="{% url 'signin' %}" class="alert-link">로그인하기</a>
+        </div>
+    {% endif %}
+{% endblock %}

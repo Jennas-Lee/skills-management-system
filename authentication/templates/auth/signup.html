@@ -1,0 +1,48 @@
+{% extends 'index/base.html' %}
+{% load static %}
+{% block contents %}
+    {% if request.user.is_authenticated %}
+        <div class="alert alert-danger" role="alert">
+            이미 로그인되어있습니다. <a href="javascript:history.back();" class="alert-link">뒤로가기</a>
+        </div>
+    {% else %}
+        <h1 class="text-center mt-2">회원가입</h1>
+        <form action="{% url 'signup' %}" method="POST">
+            {% csrf_token %}
+            {% if error %}
+                <div class="alert alert-danger mt-2" role="alert">
+                    {{ error }}
+                </div>
+            {% endif %}
+            <div class="row mb-3">
+                <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
+                <div class="col-sm-9">
+                    <input type="email" class="form-control" id="inputEmail" name="email"
+                           value="{{ email }}">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputPassword" class="col-sm-3 col-form-label">Password</label>
+                <div class="col-sm-9">
+                    <input type="password" class="form-control" id="inputPassword"
+                           name="password" value="{{ password }}">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputPasswordConfirm" class="col-sm-3 col-form-label">Password Confirm</label>
+                <div class="col-sm-9">
+                    <input type="password" class="form-control" id="inputPasswordConfirm"
+                           name="password_confirm" value="{{ password_confirm }}">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputPasswordConfirm" class="col-sm-3 col-form-label">Name</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="inputPasswordConfirm"
+                           name="name" value="{{ name }}">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary float-end">Sign up</button>
+        </form>
+    {% endif %}
+{% endblock %}

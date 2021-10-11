@@ -19,6 +19,25 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap">
     <link rel="stylesheet" href="{% static 'index/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'index/css/style.css' %}">
+    {% if 'create' in request.path %}
+        <link rel="stylesheet" href="{% static 'index/css/prism.min.css' %}">
+        <link rel="stylesheet" href="{% static 'index/css/codemirror.min.css' %}">
+        <link rel="stylesheet" href="{% static 'index/css/toastui-editor.min.css' %}">
+        <link rel="stylesheet" href="{% static 'index/css/toastui-editor-plugin-code-syntax-highlight.min.css' %}">
+        <link rel="stylesheet" href="{% static 'index/css/toastui-editor-plugin-color-syntax.min.css' %}">
+        <link rel="stylesheet" href="{% static 'index/css/tui-color-picker.min.css' %}">
+{#        <script src="{% static 'index/js/toastui-editor-all.min.js' %}"></script>#}
+        <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.js"></script>
+        <script src="{% static 'index/js/prism.min.js' %}"></script>
+        <script src="{% static 'index/js/prism-clojure.min.js' %}"></script>
+{#        <script src="{% static 'index/js/toastui-editor-plugin-chart.min.js' %}"></script>#}
+{#        <script src="https://uicdn.toast.com/editor-plugin-chart/latest/toastui-editor-plugin-chart.min.js"></script>#}
+        <script src="https://uicdn.toast.com/editor-plugin-chart/latest/toastui-editor-plugin-chart.js"></script>
+        <script src="{% static 'index/js/toastui-editor-plugin-code-syntax-highlight-all.min.js' %}"></script>
+        <script src="{% static 'index/js/toastui-editor-plugin-color-syntax.min.js' %}"></script>
+        <script src="{% static 'index/js/toastui-editor-plugin-table-merged-cell.min.js' %}"></script>
+        <script src="{% static 'index/js/toastui-editor-plugin-uml.min.js' %}"></script>
+    {% endif %}
 
     <script src="{% static 'index/js/bootstrap.min.js' %}"></script>
 
@@ -27,7 +46,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="{% url 'index' %}">
             <img src="{% static 'index/img/logo.png' %}" alt="logo" width="30" height="24"
                  class="d-inline-block align-text-top">
             기능훈련관리시스템
@@ -39,7 +58,8 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="#">공지사항</a>
+                    <a class="nav-link{% if 'notice' in request.path %} active{% endif %}" aria-current="page"
+                       href="{% url 'list_notice' %}">공지사항</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="#">게시판</a>
@@ -51,7 +71,12 @@
                     <a class="nav-link" aria-current="page" href="#">자료실</a>
                 </li>
             </ul>
-            <a href="{% url 'signin' %}" class="btn btn-outline-primary">로그인</a>
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'mypage' %}" class="btn btn-outline-primary me-2">마이페이지</a>
+                <a href="{% url 'signout' %}" class="btn btn-outline-secondary">로그아웃</a>
+            {% else %}
+                <a href="{% url 'signin' %}" class="btn btn-outline-primary">로그인</a>
+            {% endif %}
         </div>
     </div>
 </nav>

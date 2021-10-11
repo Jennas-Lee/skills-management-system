@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'index',
     'authentication',
+    'notice',
 ]
 
 MIDDLEWARE = [
@@ -103,6 +104,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTHENTICATION_BACKENDS = ['authentication.module.EmailBackend']
 
 
 # Internationalization

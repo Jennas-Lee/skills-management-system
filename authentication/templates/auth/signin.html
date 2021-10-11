@@ -1,29 +1,42 @@
 {% extends 'index/base.html' %}
 {% load static %}
 {% block contents %}
-    <div class="form-signin">
-        <form action="{% url 'signin' %}" method="POST">
-            {% csrf_token %}
-            <div class="text-center">
-                <img src="{% static 'index/img/logo.png' %}" alt="logo" width="72" height="57">
-                <h1 class="h3 mb-3 fw-normal">로그인</h1>
-            </div>
+    {% if request.user.is_authenticated %}
+        <div class="alert alert-danger" role="alert">
+            이미 로그인되어있습니다. <a href="javascript:history.back();" class="alert-link">뒤로가기</a>
+        </div>
+    {% else %}
+        <div class="form-signin">
+            <form action="{% url 'signin' %}" method="POST">
+                {% csrf_token %}
+                <div class="text-center">
+                    <img src="{% static 'index/img/logo.png' %}" alt="logo" width="72" height="57">
+                    <h1 class="h3 mb-3 fw-normal">로그인</h1>
+                </div>
+                {% if error %}
+                    <div class="alert alert-danger mt-2" role="alert">
+                        {{ error }}
+                    </div>
+                {% endif %}
+                <div class="form-floating">
+                    <input type="email" class="form-control" id="floatingInput"
+                           placeholder="name@example.com" name="email" value="{{ email }}">
+                    <label for="floatingInput">Email address</label>
+                </div>
+                <div class="form-floating">
+                    <input type="password" class="form-control" id="floatingPassword"
+                           placeholder="Password" name="password" value="{{ password }}">
+                    <label for="floatingPassword">Password</label>
+                </div>
 
-            <div class="form-floating">
-                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email">
-                <label for="floatingInput">Email address</label>
-            </div>
-            <div class="form-floating">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password">
-                <label for="floatingPassword">Password</label>
-            </div>
-
-            <div class="checkbox mb-3">
-                <label>
-                    <input type="checkbox" value="remember-me"> 자동 로그인
-                </label>
-            </div>
-            <button class="w-100 btn btn-lg btn-primary" type="submit">로그인</button>
-        </form>
-    </div>
+                <div class="checkbox mb-3">
+                    <label>
+                        <input type="checkbox" value="remember-me"> 자동 로그인
+                    </label>
+                </div>
+                <button class="w-100 btn btn-lg btn-primary mb-2" type="submit">로그인</button>
+                <a href="{% url 'signup' %}" class="w-100 btn btn-lg btn-secondary">회원가입</a>
+            </form>
+        </div>
+    {% endif %}
 {% endblock %}
