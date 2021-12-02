@@ -8,7 +8,8 @@ import re
 
 def signin(request):
     if request.method == 'GET':
-        return render(request, 'auth/signin.html')
+        return render(request, 'signin.html')
+
     elif request.method == 'POST':
         email = request.POST.get('email', None)
         password = request.POST.get('password', None)
@@ -35,12 +36,13 @@ def signin(request):
 
                 return HttpResponseRedirect(reverse('index'))
 
-        return render(request, 'auth/signin.html', response_data)
+        return render(request, 'signin.html', response_data)
 
 
 def signup(request):
     if request.method == 'GET':
-        return render(request, 'auth/signup.html')
+        return render(request, 'signup.html')
+
     elif request.method == 'POST':
         email = request.POST.get('email', None)
         password = request.POST.get('password', None)
@@ -70,7 +72,7 @@ def signup(request):
 
             return HttpResponse('<script>alert("회원가입이 완료되었습니다. 승인 후 사용가능합니다."); location.href="/";</script>')
 
-        return render(request, 'auth/signup.html', response_data)
+        return render(request, 'signup.html', response_data)
 
 
 def signout(request):
@@ -91,7 +93,8 @@ def mypage(request):
             response_data['email'] = request.user.email
             response_data['name'] = request.user.username
 
-        return render(request, 'auth/mypage.html', response_data)
+        return render(request, 'mypage.html', response_data)
+
     elif request.method == 'POST':
         email = request.POST.get('email', None)
         password = request.POST.get('password', None)
@@ -133,4 +136,4 @@ def mypage(request):
 
             response_data['success'] = "정보가 변경되었습니다."
 
-        return render(request, 'auth/mypage.html', response_data)
+        return render(request, 'mypage.html', response_data)

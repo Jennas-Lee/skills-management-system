@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block contents %}
+    {% if request.user.is_authenticated %}
+        <h1 class="text-center">공지사항</h1>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">제목</th>
+                <th scope="col">글쓴이</th>
+                <th scope="col">날짜</th>
+                <th scope="col">댓글</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for notice in page_obj %}
+                <tr>
+                    <th scope="row">1</th>
+                    <td>{{ notice.title }}</td>
+                    <td>{{ notice.user }}</td>
+                    <td>{{ notice.created_at }}</td>
+                    <td>@mdo</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item{% if page_obj.has_previous is False %} disabled{% endif %}">
+                    <a class="page-link" href="?page=1" aria-label="First">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-chevron-double-left" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                  d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"></path>
+                            <path fill-rule="evenodd"
+                                  d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"></path>
+                        </svg>
+                    </a>
+                </li>
+                <li class="page-item{% if page_obj.has_previous is False %} disabled{% endif %}">
+                    <a class="page-link"
+                       href="?page={{ previous }}"
+                       aria-label="Previous">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-chevron-left" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                  d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"></path>
+                        </svg>
+                    </a>
+                </li>
+                {% for page_num in page_obj.paginator.page_range %}
+                    <li class="page-item{% if page_obj.number == page_num %} active{% endif %}">
+                        <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+                    </li>
+                {% endfor %}
+                <li class="page-item{% if page_obj.has_next is False %} disabled{% endif %}">
+                    <a class="page-link" href="?page={{ next }}"
+                       aria-label="Next">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-chevron-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                  d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+                        </svg>
+                    </a>
+                </li>
+                <li class="page-item{% if page_obj.has_next is False %} disabled{% endif %}">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-chevron-double-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                  d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"></path>
+                            <path fill-rule="evenodd"
+                                  d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"></path>
+                        </svg>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <a href="{% url 'create_notice' %}" class="btn btn-primary float-end">글쓰기</a>
+    {% else %}
+        <div class="alert alert-danger mt-4" role="alert">
+            로그인이 필요합니다. <a href="{% url 'signin' %}" class="alert-link">로그인하기</a>
+        </div>
+    {% endif %}
+{% endblock %}

@@ -1,4 +1,4 @@
-{% extends 'index/base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 {% block contents %}
     {% if request.user.is_authenticated %}
@@ -10,7 +10,7 @@
             <form action="{% url 'signin' %}" method="POST">
                 {% csrf_token %}
                 <div class="text-center">
-                    <img src="{% static 'index/img/logo.png' %}" alt="logo" width="72" height="57">
+                    <img src="{% static 'img/logo.png' %}" alt="logo" width="72" height="57">
                     <h1 class="h3 mb-3 fw-normal">로그인</h1>
                 </div>
                 {% if error %}

@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block contents %}
+    {% if request.user.is_authenticated %}
+        <h1 class="text-center">공지사항 글쓰기</h1>
+        <form action="{% url 'create_notice' %}" method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="inputTitle" class="form-label">제목</label>
+                <input type="text" name="title" class="form-control" id="inputTitle"
+                       placeholder="제목은 30자까지 작성할 수 있습니다." maxlength="30" required>
+            </div>
+            <div class="mb-3">
+                <label for="inputContents" class="form-label">내용</label>
+                <div id="editor"></div>
+                <textarea name="contents" id="inputContents" class="visually-hidden"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="inputAttachments" class="form-label">첨부파일</label>
+                <input type="file" name="attachments" class="form-control" id="inputAttachments" multiple>
+            </div>
+            <button type="submit" class="btn btn-primary float-end">작성</button>
+        </form>
+        <script src="{% static 'js/toastui/babel.min.js' %}"></script>
+        <script src="{% static 'js/toastui/toastui-editor-all.js' %}"></script>
+        <script src="{% static 'js/toastui/toastui-chart.js' %}"></script>
+        <script src="{% static 'js/toastui/tui-color-picker.min.js' %}"></script>
+        <script src="{% static 'js/toastui/toastui-editor-plugin-chart.min.js' %}"></script>
+        <script src="{% static 'js/toastui/toastui-editor-plugin-code-syntax-highlight-all.min.js' %}"></script>
+        <script src="{% static 'js/toastui/toastui-editor-plugin-color-syntax.min.js' %}"></script>
+        <script src="{% static 'js/toastui/toastui-editor-plugin-table-merged-cell.min.js' %}"></script>
+        <script src="{% static 'js/toastui/toastui-editor-plugin-uml.min.js' %}"></script>
+        <script type="text/babel" class="code-js">
+            const {Editor} = toastui;
+            const {chart, codeSyntaxHighlight, colorSyntax, tableMergedCell, uml} = Editor.plugin;
+            let textarea = document.getElementById('inputContents');
+
+            const chartOptions = {
+                minWidth: 100,
+                maxWidth: 600,
+                minHeight: 100,
+                maxHeight: 300
+            };
+
+            const editor = new Editor({
+                el: document.querySelector('#editor'),
+                previewStyle: 'vertical',
+                height: '500px',
+                plugins: [[chart, chartOptions], [codeSyntaxHighlight, {highlighter: Prism}], colorSyntax, tableMergedCell, uml],
+                events: {
+                    change: () => {
+                        textarea.innerText = editor.getMarkdown();
+                    }
+                }
+            });
+        </script>
+    {% else %}
+        <div class="alert alert-danger mt-4" role="alert">
+            로그인이 필요합니다. <a href="{% url 'signin' %}" class="alert-link">로그인하기</a>
+        </div>
+    {% endif %}
+{% endblock %}
