@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    {% if 'create' in request.path %}
+    {% if 'create' in request.path or 'viewer' in request.path %}
         {#        <link rel="stylesheet" href="./css/tuidoc-example-style.css"/>#}
         <!-- Editor -->
         <link rel="stylesheet" href="{% static 'css/toastui/toastui-editor.css' %}">

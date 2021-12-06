@@ -49,7 +49,10 @@
                 plugins: [[chart, chartOptions], [codeSyntaxHighlight, {highlighter: Prism}], colorSyntax, tableMergedCell, uml],
                 events: {
                     change: () => {
+                        // TODO: 줄바꿈 오류 수정
                         textarea.innerText = editor.getMarkdown();
+                        console.log(editor.getMarkdown());
+                        {#console.log(textarea.inner);#}
                     }
                 }
             });
